@@ -1,0 +1,1778 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Liquid UI Business</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+            background: #000;
+            color: #fff;
+            min-height: 100%;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Login Screen */
+        .login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .login-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px);
+            border-radius: 32px;
+            padding: 60px 50px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-card h1 {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 0%, #999 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-card p {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .login-welcome {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        .google-login-btn {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .google-login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Main Dashboard */
+        .main-dashboard {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-dashboard.hidden {
+            display: none;
+        }
+
+        /* Animated Background Blobs with 3D Depth */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.2;
+            animation: float3D 25s infinite ease-in-out;
+            will-change: transform;
+        }
+
+        .blob-1 {
+            width: 500px;
+            height: 500px;
+            background: #ffd700;
+            top: -150px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 450px;
+            height: 450px;
+            background: #dc143c;
+            bottom: -150px;
+            right: -150px;
+            animation-delay: 5s;
+        }
+
+        .blob-3 {
+            width: 400px;
+            height: 400px;
+            background: #4169e1;
+            top: 50%;
+            right: -100px;
+            animation-delay: 10s;
+        }
+
+        @keyframes float3D {
+            0%, 100% { 
+                transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+                opacity: 0.2;
+            }
+            33% { 
+                transform: translate3d(80px, -80px, 20px) scale(1.15) rotate(120deg);
+                opacity: 0.25;
+            }
+            66% { 
+                transform: translate3d(-50px, 50px, -20px) scale(0.9) rotate(240deg);
+                opacity: 0.18;
+            }
+        }
+
+        /* Header */
+        .header {
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffd700 0%, #dc143c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .contact-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffd700 0%, #dc143c 100%);
+        }
+
+        /* Service Cards Container */
+        .services-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            padding: 50px;
+            perspective: 1500px;
+        }
+
+        .service-card {
+            width: 420px;
+            height: 540px;
+            position: relative;
+            border-radius: 36px;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 36px;
+            padding: 2px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            transition: all 0.6s ease;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 36px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+        }
+
+        .service-card:hover {
+            transform: translateY(-25px) translateZ(50px) scale(1.03);
+        }
+
+        .service-card:hover::after {
+            opacity: 1;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px;
+            position: relative;
+            backdrop-filter: blur(40px);
+            border-radius: 36px;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+
+        .service-card:hover .card-inner {
+            transform: translateZ(30px);
+        }
+
+        /* Printing Card */
+        .printing-card .card-inner {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.18) 0%, rgba(0, 0, 0, 0.85) 100%);
+        }
+
+        .printing-card:hover {
+            box-shadow: 0 40px 100px rgba(255, 215, 0, 0.5);
+        }
+
+        .printing-card:hover .card-glow {
+            opacity: 1;
+        }
+
+        /* Interior Card */
+        .interior-card .card-inner {
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.18) 0%, rgba(0, 0, 0, 0.85) 100%);
+        }
+
+        .interior-card:hover {
+            box-shadow: 0 40px 100px rgba(220, 20, 60, 0.5);
+        }
+
+        .interior-card:hover .card-glow {
+            opacity: 1;
+        }
+
+        .card-glow {
+            position: absolute;
+            inset: -2px;
+            border-radius: 36px;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            z-index: -1;
+        }
+
+        .printing-card .card-glow {
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.4), transparent 70%);
+        }
+
+        .interior-card .card-glow {
+            background: radial-gradient(circle at center, rgba(220, 20, 60, 0.4), transparent 70%);
+        }
+
+        .card-icon {
+            font-size: 4.5em;
+            margin-bottom: 35px;
+            animation: pulse 2.5s infinite ease-in-out;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+        }
+
+        .service-card:hover .card-icon {
+            transform: translateZ(60px) scale(1.15) rotateY(10deg);
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .card-title {
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-card:hover .card-title {
+            transform: translateZ(40px);
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-subtitle {
+            font-size: 1.05em;
+            opacity: 0.75;
+            text-align: center;
+            margin-bottom: 8px;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease 0.1s;
+        }
+
+        .service-card:hover .card-subtitle {
+            transform: translateZ(30px);
+            opacity: 0.9;
+        }
+
+        .card-description {
+            font-size: 0.95em;
+            opacity: 0.6;
+            text-align: center;
+            line-height: 1.6;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease 0.15s;
+        }
+
+        .service-card:hover .card-description {
+            transform: translateZ(25px);
+            opacity: 0.8;
+        }
+
+        .card-button {
+            margin-top: 40px;
+            padding: 16px 44px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1.05em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card-button:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover .card-button {
+            transform: translateZ(70px) translateY(-5px);
+        }
+
+        .printing-card .card-button {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #000;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .interior-card .card-button {
+            background: linear-gradient(135deg, #dc143c 0%, #ff6347 100%);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.4);
+        }
+
+        .card-button:hover {
+            box-shadow: 0 15px 50px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Service Detail Section with 3D Transition */
+        .service-detail {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 999;
+            overflow-y: auto;
+            transform: translateY(100%) scale(0.9) rotateX(10deg);
+            transform-origin: center bottom;
+            transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s ease;
+            opacity: 0;
+            transform-style: preserve-3d;
+        }
+
+        .service-detail.active {
+            transform: translateY(0) scale(1) rotateX(0);
+            opacity: 1;
+        }
+
+        .detail-header {
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .back-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 13px 30px;
+            border-radius: 50px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(-5px);
+        }
+
+        .detail-content {
+            padding: 70px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .detail-title {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .detail-description {
+            text-align: center;
+            font-size: 1.2em;
+            opacity: 0.75;
+            margin-bottom: 70px;
+            line-height: 1.7;
+        }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 35px;
+            margin-top: 50px;
+        }
+
+        .portfolio-item {
+            aspect-ratio: 4/3;
+            border-radius: 28px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transform-style: preserve-3d;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-18px) translateZ(40px) scale(1.03) rotateX(5deg);
+        }
+
+        .portfolio-item::after {
+            content: 'Click to View';
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            font-size: 1.3em;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .portfolio-item:hover::after {
+            opacity: 1;
+        }
+
+        .portfolio-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5em;
+        }
+
+        /* Printing Theme */
+        .printing-detail {
+            background: linear-gradient(135deg, #1a1a00 0%, #000 100%);
+        }
+
+        .printing-detail .detail-title {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .printing-detail .portfolio-item:hover {
+            box-shadow: 0 25px 70px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Interior Theme */
+        .interior-detail {
+            background: linear-gradient(135deg, #1a0000 0%, #000 100%);
+        }
+
+        .interior-detail .detail-title {
+            background: linear-gradient(135deg, #dc143c 0%, #ff6347 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .interior-detail .portfolio-item:hover {
+            box-shadow: 0 25px 70px rgba(220, 20, 60, 0.4);
+        }
+
+        /* Contact Modal */
+        .contact-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2001;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .contact-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(40px);
+            border-radius: 32px;
+            padding: 50px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            animation: slideUp3D 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+        }
+
+        @keyframes slideUp3D {
+            from { 
+                transform: translateY(80px) translateZ(-100px) rotateX(-15deg) scale(0.9);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0) translateZ(0) rotateX(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .contact-card h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, #ffd700 0%, #dc143c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+
+        .contact-icon {
+            font-size: 1.8em;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 0.85em;
+            opacity: 0.6;
+            margin-bottom: 5px;
+        }
+
+        .contact-value {
+            font-size: 1.05em;
+            font-weight: 600;
+        }
+
+        .close-contact-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.6em;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-contact-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.5);
+            transition: all 0.3s ease;
+            z-index: 100;
+            border: none;
+            animation: floatWhatsApp 3s infinite ease-in-out;
+        }
+
+        @keyframes floatWhatsApp {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .whatsapp-button:hover {
+            transform: scale(1.15) translateY(-8px);
+            box-shadow: 0 18px 45px rgba(37, 211, 102, 0.7);
+            animation: none;
+        }
+
+        .whatsapp-button svg {
+            width: 38px;
+            height: 38px;
+            fill: #fff;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(40px);
+            border-radius: 28px;
+            padding: 50px;
+            max-width: 90%;
+            max-height: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.6em;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-text {
+            font-size: 1.6em;
+            text-align: center;
+        }
+
+        /* Smooth Scrolling */
+        .service-detail {
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        /* Touch Optimization - Enhanced for All Devices */
+        @media (hover: none) {
+            .services-container {
+                perspective: 2000px;
+            }
+
+            .service-card {
+                transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            }
+
+            .service-card:active {
+                transform: translateY(-15px) scale(0.97);
+            }
+
+            .service-card:active .card-icon {
+                transform: translateZ(40px) scale(1.1);
+            }
+
+            .service-card:active .card-title {
+                transform: translateZ(30px);
+            }
+
+            .service-card:active .card-button {
+                transform: translateZ(50px) scale(0.95);
+            }
+
+            .card-button:active {
+                transform: scale(0.95);
+            }
+
+            .back-button:active {
+                transform: translateX(-5px) scale(0.95);
+            }
+
+            .contact-btn:active {
+                transform: translateY(-2px) scale(0.95);
+            }
+
+            .portfolio-item:active {
+                transform: translateY(-12px) scale(0.98);
+            }
+
+            .whatsapp-button:active {
+                transform: scale(0.92);
+            }
+
+            .contact-item:active {
+                transform: translateX(3px) scale(0.98);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .services-container {
+                flex-direction: column;
+                gap: 35px;
+                padding: 40px 20px;
+            }
+
+            .service-card {
+                width: 100%;
+                max-width: 420px;
+                height: 520px;
+            }
+
+            .card-icon {
+                font-size: 4em;
+            }
+
+            .card-title {
+                font-size: 2em;
+            }
+
+            .card-subtitle {
+                font-size: 1em;
+            }
+
+            .header {
+                padding: 20px 25px;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .logo {
+                font-size: 1.3em;
+            }
+
+            .header-right {
+                gap: 15px;
+            }
+
+            .contact-btn {
+                padding: 9px 20px;
+                font-size: 0.85em;
+            }
+
+            .user-info {
+                font-size: 0.9em;
+            }
+
+            .detail-content {
+                padding: 50px 25px;
+            }
+
+            .detail-title {
+                font-size: 2.5em;
+            }
+
+            .detail-description {
+                font-size: 1.1em;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 25px;
+            }
+
+            .login-card {
+                padding: 50px 35px;
+            }
+
+            .login-card h1 {
+                font-size: 1.8em;
+            }
+
+            .blob-1, .blob-2, .blob-3 {
+                width: 350px;
+                height: 350px;
+            }
+
+            .contact-card {
+                padding: 40px 35px;
+            }
+
+            .contact-card h2 {
+                font-size: 1.8em;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .services-container {
+                padding: 30px 15px;
+                gap: 30px;
+            }
+
+            .service-card {
+                height: 460px;
+                max-width: 100%;
+            }
+
+            .card-icon {
+                font-size: 3.5em;
+                margin-bottom: 25px;
+            }
+
+            .card-title {
+                font-size: 1.8em;
+            }
+
+            .card-subtitle {
+                font-size: 0.95em;
+            }
+
+            .card-description {
+                font-size: 0.9em;
+            }
+
+            .card-button {
+                margin-top: 30px;
+                padding: 14px 36px;
+                font-size: 1em;
+            }
+
+            .header {
+                padding: 18px 20px;
+            }
+
+            .logo {
+                font-size: 1.2em;
+            }
+
+            .contact-btn {
+                padding: 8px 18px;
+                font-size: 0.8em;
+            }
+
+            .user-info {
+                padding: 8px 16px;
+                font-size: 0.85em;
+            }
+
+            .user-avatar {
+                width: 30px;
+                height: 30px;
+            }
+
+            .detail-content {
+                padding: 40px 20px;
+            }
+
+            .detail-title {
+                font-size: 2.1em;
+                margin-bottom: 15px;
+            }
+
+            .detail-description {
+                font-size: 1em;
+                margin-bottom: 50px;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .portfolio-item {
+                border-radius: 22px;
+            }
+
+            .portfolio-placeholder {
+                font-size: 3em;
+            }
+
+            .back-button {
+                padding: 11px 24px;
+                font-size: 0.9em;
+            }
+
+            .login-card {
+                padding: 40px 28px;
+            }
+
+            .login-card h1 {
+                font-size: 1.7em;
+            }
+
+            .login-card p {
+                font-size: 0.9em;
+                margin-bottom: 15px;
+            }
+
+            .login-welcome {
+                font-size: 0.95em;
+                margin-bottom: 35px;
+            }
+
+            .google-login-btn {
+                padding: 14px 28px;
+                font-size: 0.95em;
+            }
+
+            .whatsapp-button {
+                width: 62px;
+                height: 62px;
+                bottom: 22px;
+                right: 22px;
+            }
+
+            .whatsapp-button svg {
+                width: 33px;
+                height: 33px;
+            }
+
+            .blob-1, .blob-2, .blob-3 {
+                width: 280px;
+                height: 280px;
+            }
+
+            .contact-card {
+                padding: 35px 28px;
+            }
+
+            .contact-card h2 {
+                font-size: 1.6em;
+                margin-bottom: 25px;
+            }
+
+            .contact-item {
+                padding: 15px 20px;
+            }
+
+            .contact-icon {
+                font-size: 1.5em;
+            }
+
+            .contact-value {
+                font-size: 0.95em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 15px 18px;
+            }
+
+            .logo {
+                font-size: 1.1em;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .contact-btn {
+                flex: 1;
+            }
+
+            .user-info {
+                padding: 7px 14px;
+                font-size: 0.8em;
+                gap: 8px;
+            }
+
+            .user-avatar {
+                width: 28px;
+                height: 28px;
+            }
+
+            .services-container {
+                padding: 25px 12px;
+            }
+
+            .service-card {
+                height: 440px;
+            }
+
+            .card-icon {
+                font-size: 3.2em;
+            }
+
+            .card-title {
+                font-size: 1.6em;
+            }
+
+            .card-subtitle {
+                font-size: 0.9em;
+            }
+
+            .card-description {
+                font-size: 0.85em;
+            }
+
+            .card-button {
+                padding: 12px 30px;
+                font-size: 0.95em;
+            }
+
+            .detail-content {
+                padding: 35px 18px;
+            }
+
+            .detail-title {
+                font-size: 1.9em;
+            }
+
+            .detail-description {
+                font-size: 0.95em;
+                margin-bottom: 40px;
+            }
+
+            .portfolio-item::after {
+                font-size: 1.1em;
+            }
+
+            .back-button {
+                padding: 10px 22px;
+                font-size: 0.85em;
+            }
+
+            .detail-header .logo {
+                font-size: 1em;
+            }
+
+            .login-card {
+                padding: 35px 25px;
+            }
+
+            .login-card h1 {
+                font-size: 1.5em;
+            }
+
+            .login-card p {
+                font-size: 0.85em;
+            }
+
+            .login-welcome {
+                font-size: 0.9em;
+            }
+
+            .google-login-btn {
+                padding: 13px 24px;
+                font-size: 0.9em;
+                gap: 10px;
+            }
+
+            .google-login-btn svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            .whatsapp-button {
+                width: 58px;
+                height: 58px;
+                bottom: 18px;
+                right: 18px;
+            }
+
+            .whatsapp-button svg {
+                width: 30px;
+                height: 30px;
+            }
+
+            .modal-content {
+                padding: 35px 25px;
+                max-width: 95%;
+            }
+
+            .modal-text {
+                font-size: 1.3em;
+            }
+
+            .modal-close {
+                width: 40px;
+                height: 40px;
+                font-size: 1.4em;
+            }
+
+            .blob-1, .blob-2, .blob-3 {
+                width: 220px;
+                height: 220px;
+            }
+
+            .contact-card {
+                padding: 30px 22px;
+            }
+
+            .contact-card h2 {
+                font-size: 1.5em;
+            }
+
+            .contact-item {
+                padding: 14px 18px;
+                margin-bottom: 12px;
+            }
+
+            .contact-icon {
+                font-size: 1.4em;
+            }
+
+            .contact-label {
+                font-size: 0.8em;
+            }
+
+            .contact-value {
+                font-size: 0.9em;
+            }
+
+            .close-contact-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 1.4em;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .service-card {
+                height: 420px;
+            }
+
+            .card-icon {
+                font-size: 3em;
+            }
+
+            .card-title {
+                font-size: 1.5em;
+            }
+
+            .detail-title {
+                font-size: 1.7em;
+            }
+
+            .portfolio-placeholder {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container"><!-- Login Screen -->
+   <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+     <h1 id="loginBusinessName">Premium Services</h1>
+     <p id="loginTagline">Excellence in Every Detail</p>
+     <p class="login-welcome" id="loginWelcome">Welcome! Discover our premium services</p><button class="google-login-btn" id="googleLoginBtn">
+      <svg width="20" height="20" viewbox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" /> <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" /> <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" /> <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+      </svg> Continue with Google </button>
+    </div>
+   </div><!-- Main Dashboard -->
+   <div class="main-dashboard hidden" id="mainDashboard">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="header">
+     <div class="logo" id="businessName">
+      Premium Services
+     </div>
+     <div class="header-right"><button class="contact-btn" id="contactBtn">Contact Us</button>
+      <div class="user-info">
+       <div class="user-avatar"></div><span id="userName">Guest</span>
+      </div>
+     </div>
+    </div>
+    <div class="services-container">
+     <div class="service-card printing-card" id="printingCard">
+      <div class="card-glow"></div>
+      <div class="card-inner">
+       <div class="card-icon">
+        🖨️
+       </div>
+       <h2 class="card-title" id="printingTitle">Printing Press</h2>
+       <p class="card-subtitle" id="printingSubtitle">Industrial excellence in every print</p>
+       <p class="card-description" id="printingDescription">Professional printing solutions</p><button class="card-button" id="printingButton">Explore Projects</button>
+      </div>
+     </div>
+     <div class="service-card interior-card" id="interiorCard">
+      <div class="card-glow"></div>
+      <div class="card-inner">
+       <div class="card-icon">
+        🏠
+       </div>
+       <h2 class="card-title" id="interiorTitle">Interior Designer</h2>
+       <p class="card-subtitle" id="interiorSubtitle">Luxury living spaces crafted</p>
+       <p class="card-description" id="interiorDescription">Transform your space</p><button class="card-button" id="interiorButton">View Gallery</button>
+      </div>
+     </div>
+    </div>
+   </div><!-- Printing Detail Section -->
+   <div class="service-detail printing-detail" id="printingDetail">
+    <div class="detail-header"><button class="back-button" id="printingBackBtn">← Back to Services</button>
+     <div class="logo" id="printingHeaderName">
+      Printing Press
+     </div>
+    </div>
+    <div class="detail-content">
+     <h1 class="detail-title" id="printingDetailTitle">Our Printing Projects</h1>
+     <p class="detail-description" id="printingDetailDescription">Industrial-grade printing solutions with cutting-edge technology</p>
+     <div class="portfolio-grid">
+      <div class="portfolio-item" data-project="1">
+       <div class="portfolio-placeholder">
+        📄
+       </div>
+      </div>
+      <div class="portfolio-item" data-project="2">
+       <div class="portfolio-placeholder">
+        📰
+       </div>
+      </div>
+      <div class="portfolio-item" data-project="3">
+       <div class="portfolio-placeholder">
+        📋
+       </div>
+      </div>
+      <div class="portfolio-item" data-project="4">
+       <div class="portfolio-placeholder">
+        📑
+       </div>
+      </div>
+      <div class="portfolio-item" data-project="5">
+       <div class="portfolio-placeholder">
+        📃
+       </div>
+      </div>
+      <div class="portfolio-item" data-project="6">
+       <div class="portfolio-placeholder">
+        📊
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Interior Detail Section -->
+   <div class="service-detail interior-detail" id="interiorDetail">
+    <div class="detail-header"><button class="back-button" id="interiorBackBtn">← Back to Services</button>
+     <div class="logo" id="interiorHeaderName">
+      Interior Designer
+     </div>
+    </div>
+    <div class="detail-content">
+     <h1 class="detail-title" id="interiorDetailTitle">Interior Design Gallery</h1>
+     <p class="detail-description" id="interiorDetailDescription">Transforming spaces into luxurious, modern living experiences</p>
+     <div class="portfolio-grid">
+      <div class="portfolio-item" data-project="1">
+       <div class="portfolio-placeholder">
+        🛋️
+       </div>
+      </div>
+      <div class="portfolio-item" data-project="2">
+       <div class="portfolio-placeholder">
+        🪴
+       </div>
+      </div>
+      <div class="portfolio-item" data-project="3">
+       <div class="portfolio-placeholder">
+        🛏️
+       </div>
+      </div>
+      <div class="portfolio-item" data-project="4">
+       <div class="portfolio-placeholder">
+        🍽️
+       </div>
+      </div>
+      <div class="portfolio-item" data-project="5">
+       <div class="portfolio-placeholder">
+        🏡
+       </div>
+      </div>
+      <div class="portfolio-item" data-project="6">
+       <div class="portfolio-placeholder">
+        🪑
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Contact Modal -->
+   <div class="contact-modal" id="contactModal">
+    <div class="contact-card"><button class="close-contact-btn" id="closeContactBtn">×</button>
+     <h2>Get in Touch</h2>
+     <div class="contact-item" id="whatsappContact">
+      <div class="contact-icon">
+       ��
+      </div>
+      <div class="contact-info">
+       <div class="contact-label">
+        WhatsApp
+       </div>
+       <div class="contact-value" id="whatsappValue">
+        +1234567890
+       </div>
+      </div>
+     </div>
+     <div class="contact-item" id="phoneContact">
+      <div class="contact-icon">
+       📞
+      </div>
+      <div class="contact-info">
+       <div class="contact-label">
+        Phone
+       </div>
+       <div class="contact-value" id="phoneValue">
+        +1234567890
+       </div>
+      </div>
+     </div>
+     <div class="contact-item" id="emailContact">
+      <div class="contact-icon">
+       📧
+      </div>
+      <div class="contact-info">
+       <div class="contact-label">
+        Email
+       </div>
+       <div class="contact-value" id="emailValue">
+        contact@business.com
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- WhatsApp Button --> <button class="whatsapp-button" id="whatsappBtn" style="display: none;">
+    <svg viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg></button> <!-- Modal -->
+   <div class="modal" id="modal">
+    <div class="modal-content"><button class="modal-close" id="modalClose">×</button>
+     <p class="modal-text" id="modalText">Project details would be displayed here</p>
+    </div>
+   </div>
+  </div>
+  <script>
+        const defaultConfig = {
+            business_name: "Premium Services",
+            tagline: "Excellence in Every Detail",
+            welcome_message: "Welcome! Discover our premium services",
+            printing_title: "Printing Press",
+            printing_subtitle: "Industrial excellence in every print",
+            printing_description: "Professional printing solutions",
+            printing_button_text: "Explore Projects",
+            printing_portfolio_title: "Our Printing Projects",
+            printing_portfolio_description: "Industrial-grade printing solutions with cutting-edge technology",
+            interior_title: "Interior Designer",
+            interior_subtitle: "Luxury living spaces crafted",
+            interior_description: "Transform your space",
+            interior_button_text: "View Gallery",
+            interior_portfolio_title: "Interior Design Gallery",
+            interior_portfolio_description: "Transforming spaces into luxurious, modern living experiences",
+            whatsapp_number: "+1234567890",
+            email_address: "contact@business.com",
+            phone_number: "+1234567890"
+        };
+
+        async function onConfigChange(config) {
+            const businessName = config.business_name || defaultConfig.business_name;
+            const tagline = config.tagline || defaultConfig.tagline;
+            const welcomeMessage = config.welcome_message || defaultConfig.welcome_message;
+            const printingTitle = config.printing_title || defaultConfig.printing_title;
+            const printingSubtitle = config.printing_subtitle || defaultConfig.printing_subtitle;
+            const printingDescription = config.printing_description || defaultConfig.printing_description;
+            const printingButtonText = config.printing_button_text || defaultConfig.printing_button_text;
+            const printingPortfolioTitle = config.printing_portfolio_title || defaultConfig.printing_portfolio_title;
+            const printingPortfolioDescription = config.printing_portfolio_description || defaultConfig.printing_portfolio_description;
+            const interiorTitle = config.interior_title || defaultConfig.interior_title;
+            const interiorSubtitle = config.interior_subtitle || defaultConfig.interior_subtitle;
+            const interiorDescription = config.interior_description || defaultConfig.interior_description;
+            const interiorButtonText = config.interior_button_text || defaultConfig.interior_button_text;
+            const interiorPortfolioTitle = config.interior_portfolio_title || defaultConfig.interior_portfolio_title;
+            const interiorPortfolioDescription = config.interior_portfolio_description || defaultConfig.interior_portfolio_description;
+            const whatsappNumber = config.whatsapp_number || defaultConfig.whatsapp_number;
+            const emailAddress = config.email_address || defaultConfig.email_address;
+            const phoneNumber = config.phone_number || defaultConfig.phone_number;
+            
+            document.getElementById('loginBusinessName').textContent = businessName;
+            document.getElementById('loginTagline').textContent = tagline;
+            document.getElementById('loginWelcome').textContent = welcomeMessage;
+            document.getElementById('businessName').textContent = businessName;
+            document.getElementById('printingTitle').textContent = printingTitle;
+            document.getElementById('printingSubtitle').textContent = printingSubtitle;
+            document.getElementById('printingDescription').textContent = printingDescription;
+            document.getElementById('printingButton').textContent = printingButtonText;
+            document.getElementById('interiorTitle').textContent = interiorTitle;
+            document.getElementById('interiorSubtitle').textContent = interiorSubtitle;
+            document.getElementById('interiorDescription').textContent = interiorDescription;
+            document.getElementById('interiorButton').textContent = interiorButtonText;
+            document.getElementById('printingHeaderName').textContent = printingTitle;
+            document.getElementById('printingDetailTitle').textContent = printingPortfolioTitle;
+            document.getElementById('printingDetailDescription').textContent = printingPortfolioDescription;
+            document.getElementById('interiorHeaderName').textContent = interiorTitle;
+            document.getElementById('interiorDetailTitle').textContent = interiorPortfolioTitle;
+            document.getElementById('interiorDetailDescription').textContent = interiorPortfolioDescription;
+            document.getElementById('whatsappValue').textContent = whatsappNumber;
+            document.getElementById('emailValue').textContent = emailAddress;
+            document.getElementById('phoneValue').textContent = phoneNumber;
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["business_name", config.business_name || defaultConfig.business_name],
+                ["tagline", config.tagline || defaultConfig.tagline],
+                ["welcome_message", config.welcome_message || defaultConfig.welcome_message],
+                ["printing_title", config.printing_title || defaultConfig.printing_title],
+                ["printing_subtitle", config.printing_subtitle || defaultConfig.printing_subtitle],
+                ["printing_description", config.printing_description || defaultConfig.printing_description],
+                ["printing_button_text", config.printing_button_text || defaultConfig.printing_button_text],
+                ["printing_portfolio_title", config.printing_portfolio_title || defaultConfig.printing_portfolio_title],
+                ["printing_portfolio_description", config.printing_portfolio_description || defaultConfig.printing_portfolio_description],
+                ["interior_title", config.interior_title || defaultConfig.interior_title],
+                ["interior_subtitle", config.interior_subtitle || defaultConfig.interior_subtitle],
+                ["interior_description", config.interior_description || defaultConfig.interior_description],
+                ["interior_button_text", config.interior_button_text || defaultConfig.interior_button_text],
+                ["interior_portfolio_title", config.interior_portfolio_title || defaultConfig.interior_portfolio_title],
+                ["interior_portfolio_description", config.interior_portfolio_description || defaultConfig.interior_portfolio_description],
+                ["whatsapp_number", config.whatsapp_number || defaultConfig.whatsapp_number],
+                ["email_address", config.email_address || defaultConfig.email_address],
+                ["phone_number", config.phone_number || defaultConfig.phone_number]
+            ]);
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities: () => ({
+                    recolorables: [],
+                    borderables: [],
+                    fontEditable: undefined,
+                    fontSizeable: undefined
+                }),
+                mapToEditPanelValues
+            });
+        }
+
+        // Check for saved login
+        const savedUser = localStorage.getItem('loggedInUser');
+        
+        if (savedUser) {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('mainDashboard').classList.remove('hidden');
+            document.getElementById('userName').textContent = savedUser;
+            document.getElementById('whatsappBtn').style.display = 'flex';
+        }
+
+        // Google Login
+        document.getElementById('googleLoginBtn').addEventListener('click', () => {
+            const userName = 'User';
+            localStorage.setItem('loggedInUser', userName);
+            document.getElementById('userName').textContent = userName;
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('mainDashboard').classList.remove('hidden');
+            document.getElementById('whatsappBtn').style.display = 'flex';
+        });
+
+        // Service Card Navigation
+        document.getElementById('printingCard').addEventListener('click', () => {
+            document.getElementById('printingDetail').classList.add('active');
+        });
+
+        document.getElementById('interiorCard').addEventListener('click', () => {
+            document.getElementById('interiorDetail').classList.add('active');
+        });
+
+        // Back Buttons
+        document.getElementById('printingBackBtn').addEventListener('click', () => {
+            document.getElementById('printingDetail').classList.remove('active');
+        });
+
+        document.getElementById('interiorBackBtn').addEventListener('click', () => {
+            document.getElementById('interiorDetail').classList.remove('active');
+        });
+
+        // Contact Modal
+        document.getElementById('contactBtn').addEventListener('click', () => {
+            document.getElementById('contactModal').classList.add('active');
+        });
+
+        document.getElementById('closeContactBtn').addEventListener('click', () => {
+            document.getElementById('contactModal').classList.remove('active');
+        });
+
+        document.getElementById('contactModal').addEventListener('click', (e) => {
+            if (e.target.id === 'contactModal') {
+                document.getElementById('contactModal').classList.remove('active');
+            }
+        });
+
+        // Contact Items Click Actions
+        document.getElementById('whatsappContact').addEventListener('click', () => {
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            const whatsappNumber = (config.whatsapp_number || defaultConfig.whatsapp_number).replace(/[^0-9]/g, '');
+            window.open(`https://wa.me/${whatsappNumber}`, '_blank', 'noopener,noreferrer');
+        });
+
+        document.getElementById('phoneContact').addEventListener('click', () => {
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            const phoneNumber = (config.phone_number || defaultConfig.phone_number).replace(/[^0-9]/g, '');
+            window.open(`tel:${phoneNumber}`, '_blank', 'noopener,noreferrer');
+        });
+
+        document.getElementById('emailContact').addEventListener('click', () => {
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            const email = config.email_address || defaultConfig.email_address;
+            window.open(`mailto:${email}`, '_blank', 'noopener,noreferrer');
+        });
+
+        // WhatsApp Button
+        document.getElementById('whatsappBtn').addEventListener('click', () => {
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            const whatsappNumber = (config.whatsapp_number || defaultConfig.whatsapp_number).replace(/[^0-9]/g, '');
+            window.open(`https://wa.me/${whatsappNumber}`, '_blank', 'noopener,noreferrer');
+        });
+
+        // Portfolio Items
+        document.querySelectorAll('.portfolio-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                const projectNum = e.currentTarget.dataset.project;
+                document.getElementById('modalText').textContent = `Project ${projectNum} - Full details and images would be displayed here`;
+                document.getElementById('modal').classList.add('active');
+            });
+        });
+
+        // Modal Close
+        document.getElementById('modalClose').addEventListener('click', () => {
+            document.getElementById('modal').classList.remove('active');
+        });
+
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') {
+                document.getElementById('modal').classList.remove('active');
+            }
+        });
+
+        // Advanced 3D Card Tilt Effect with Depth
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                if (window.matchMedia('(hover: hover)').matches) {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / 15;
+                    const rotateY = (centerX - x) / 15;
+                    
+                    card.style.transform = `
+                        perspective(1500px)
+                        translateY(-25px)
+                        translateZ(50px)
+                        rotateX(${rotateX}deg)
+                        rotateY(${rotateY}deg)
+                        scale3d(1.03, 1.03, 1.03)
+                    `;
+                    card.style.transition = 'none';
+                }
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+                card.style.transition = 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+            });
+        });
+
+        // Portfolio Item 3D Tilt
+        document.querySelectorAll('.portfolio-item').forEach(item => {
+            item.addEventListener('mousemove', (e) => {
+                if (window.matchMedia('(hover: hover)').matches) {
+                    const rect = item.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / 20;
+                    const rotateY = (centerX - x) / 20;
+                    
+                    item.style.transform = `
+                        translateY(-18px)
+                        translateZ(40px)
+                        rotateX(${rotateX}deg)
+                        rotateY(${rotateY}deg)
+                        scale(1.03)
+                    `;
+                    item.style.transition = 'none';
+                }
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = '';
+                item.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+            });
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a0e8e0d7364e8c7',t:'MTc2MzU0MzIyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
